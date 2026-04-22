@@ -429,7 +429,7 @@ export default function App() {
               <img src="/logo-gahia.png" alt="Gahia Bio" className="gahia-logo-main" />
             </div>
             <div className="hero-text-item" onClick={() => setShowAdoptModal(true)}>
-              <h1 className="huge-text-oxigeno">+ OXÍGENO<br/>+ VIDA</h1>
+              <img src="/logo-oxigeno.png" alt="+ Oxígeno + Vida" className="oxigeno-logo-top" />
             </div>
           </div>
 

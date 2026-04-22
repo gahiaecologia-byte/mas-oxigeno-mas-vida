@@ -564,16 +564,15 @@ body{
   filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
 }
 
-.huge-text-oxigeno {
-  font-family: 'Luckiest Guy', cursive;
-  font-size: 5rem;
-  line-height: 0.9;
-  color: white;
-  text-align: right;
-  letter-spacing: -2px;
-  filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
-  margin: 0;
+.oxigeno-logo-top {
+  height: 140px;
+  filter: drop-shadow(0 10px 30px rgba(45,180,90,0.4));
   cursor: pointer;
+}
+
+.huge-text-oxigeno {
+  /* Mantengo por si acaso, pero ya no se usa */
+  display: none;
 }
 
 .hero-mid-area {
@@ -607,9 +606,9 @@ body{
 
 .sammy-bubble-v2 {
   position: absolute;
-  top: 15%;
-  left: 55%;
-  background: #208a51; /* Verde del mockup */
+  top: 5%; /* Más arriba */
+  left: 70%; /* Más a la derecha para no tapar la cara */
+  background: #208a51;
   color: #071a0e;
   font-family: 'Luckiest Guy', cursive;
   padding: 20px 35px;
@@ -634,11 +633,12 @@ body{
 
 .sammy-text-logo-v2 {
   position: absolute;
-  right: -60px;
-  bottom: 25%;
-  height: 140px;
+  left: 40%; /* Movido a la izquierda (hacia Sammy) */
+  bottom: 20%;
+  height: 280px; /* EL DOBLE DE GRANDE */
   z-index: 6;
   filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+  pointer-events: none;
 }
 
 .search-card-v2 {
