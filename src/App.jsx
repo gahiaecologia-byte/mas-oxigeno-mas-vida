@@ -164,6 +164,52 @@ const AdoptModal = ({ onClose }) => (
     </div>
   </div>
 );
+const VALID_ACCESS_KEYS = ['GAHIA2026', 'OXIGENO2173', 'SAMMY2024', 'ADMIN-GAHIA'];
+
+const AdminAuthModal = ({ onLogin, onClose }) => {
+  const [key, setKey] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (VALID_ACCESS_KEYS.includes(key.toUpperCase().trim())) {
+      onLogin();
+    } else {
+      setError('Llave de acceso incorrecta');
+      setKey('');
+    }
+  };
+
+  return (
+    <div className="certificate-modal" onClick={onClose}>
+      <div className="certificate-content" onClick={e => e.stopPropagation()} style={{ maxWidth: '400px', textAlign: 'center' }}>
+        <button className="btn-secondary" onClick={onClose} style={{ position: 'absolute', top: 16, left: 16 }}>✕</button>
+        <div style={{ marginBottom: '1.5rem', color: 'var(--green-400)' }}>
+          <Building size={48} style={{ marginBottom: '1rem' }} />
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.8rem', color: '#1a7a47' }}>Acceso Administrativo</h2>
+        </div>
+        <p style={{ color: '#555', marginBottom: '1.5rem', fontSize: '0.9rem' }}>
+          Ingresa tu llave de acceso personal para gestionar la siembra y adoptantes.
+        </p>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="password"
+            placeholder="Llave de acceso"
+            value={key}
+            onChange={(e) => setKey(e.target.value)}
+            className="input-field"
+            autoFocus
+            style={{ textAlign: 'center', fontSize: '1.2rem', letterSpacing: '4px', color: '#333', borderColor: '#ccc' }}
+          />
+          {error && <p style={{ color: '#ff6b6b', fontSize: '0.85rem', marginTop: '0.5rem' }}>{error}</p>}
+          <button type="submit" className="btn-primary" style={{ width: '100%', marginTop: '1.5rem', justifyContent: 'center' }}>
+            Ingresar al Panel
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
 
 export default function App() {
   const [searchInput, setSearchInput] = useState('');
@@ -174,6 +220,8 @@ export default function App() {
   const [showCertificate, setShowCertificate] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
   const [showAdoptModal, setShowAdoptModal] = useState(false);
+  const [showAdminAuth, setShowAdminAuth] = useState(false);
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
   const treesData = getTrees();
 
   const handleSearch = e => {
@@ -325,6 +373,16 @@ export default function App() {
       )}
       {showContactModal && <ContactModal onClose={() => setShowContactModal(false)} />}
       {showAdoptModal && <AdoptModal onClose={() => setShowAdoptModal(false)} />}
+      {showAdminAuth && (
+        <AdminAuthModal
+          onLogin={() => {
+            setIsAdminAuthenticated(true);
+            setShowAdminAuth(false);
+            setView('admin');
+          }}
+          onClose={() => setShowAdminAuth(false)}
+        />
+      )}
 
       <a href="https://wa.me/573508864036?text=Hola%20Gahia%20Bio%2C%20quiero%20adoptar%20un%20árbol%20🌳"
          className="whatsapp-btn" target="_blank" rel="noreferrer" title="Chatea con Gahia Bio">
@@ -353,7 +411,13 @@ export default function App() {
               <ArrowLeft size={14} /> Volver
             </button>
           )}
-          <button className="nav-btn admin" onClick={() => setView('admin')}>Admin</button>
+          <button className="nav-btn admin" onClick={() => {
+            if (isAdminAuthenticated) {
+              setView('admin');
+            } else {
+              setShowAdminAuth(true);
+            }
+          }}>Admin</button>
         </div>
       </header>
 

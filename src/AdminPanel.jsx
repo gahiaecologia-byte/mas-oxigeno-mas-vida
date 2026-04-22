@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { getTrees, addTree } from './data/trees';
+import { getTrees, addTree, deleteTree } from './data/trees';
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
-import { ArrowLeft, Save, MapPin, Building, User, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Save, MapPin, Building, User, CheckCircle, Trash2, Camera, X } from 'lucide-react';
 
 const LocationPicker = ({ position, setPosition }) => {
   useMapEvents({ click(e) { setPosition([e.latlng.lat, e.latlng.lng]); } });
@@ -33,6 +33,20 @@ export default function AdminPanel({ onBack }) {
   const handleInputChange = e => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleDelete = id => {
+    if (window.confirm('¿Estás seguro de eliminar este registro?')) {
+      deleteTree(id);
+      setTrees(getTrees());
+    }
+  };
+
+  const handleClearExamples = () => {
+    if (window.confirm('¿Deseas eliminar TODOS los registros de ejemplo?')) {
+      localStorage.setItem('adopta_arboles', JSON.stringify([]));
+      setTrees([]);
+    }
   };
 
   const handleSubmit = e => {
@@ -130,8 +144,33 @@ export default function AdminPanel({ onBack }) {
               </div>
 
               <div className="form-group">
-                <label>URL de la Foto del Árbol</label>
-                <input type="url" name="photoUrl" value={formData.photoUrl} onChange={handleInputChange} required className="input-field" placeholder="https://images.unsplash.com/..." />
+                <label>Foto del Árbol</label>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <input type="url" name="photoUrl" value={formData.photoUrl} onChange={handleInputChange} className="input-field" placeholder="Pega URL o usa el botón ➜" style={{ flex: 1 }} />
+                  <label className="btn-secondary" style={{ cursor: 'pointer', padding: '0 1rem', display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <Camera size={18} /> Tomar Foto
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      capture="environment" 
+                      style={{ display: 'none' }} 
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onloadend = () => setFormData(prev => ({ ...prev, photoUrl: reader.result }));
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
+                {formData.photoUrl && (
+                  <div style={{ marginTop: '0.5rem', position: 'relative', width: 'fit-content' }}>
+                    <img src={formData.photoUrl} alt="Preview" style={{ height: 60, borderRadius: 8, border: '1px solid var(--green-300)' }} />
+                    <button type="button" onClick={() => setFormData(prev => ({ ...prev, photoUrl: '' }))} style={{ position: 'absolute', top: -5, right: -5, background: '#ff4d4d', color: 'white', border: 'none', borderRadius: '50%', width: 20, height: 20, fontSize: 10, cursor: 'pointer' }}>✕</button>
+                  </div>
+                )}
               </div>
 
               <div className="form-group">
@@ -163,12 +202,22 @@ export default function AdminPanel({ onBack }) {
             </div>
 
             <div className="admin-card" style={{ maxHeight: 380, overflowY: 'auto' }}>
-              <h2 style={{ marginBottom: '1rem' }}>Registros ({trees.length})</h2>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                <h2 style={{ margin: 0 }}>Registros ({trees.length})</h2>
+                <button type="button" onClick={handleClearExamples} className="btn-secondary" style={{ color: '#ff6b6b', borderColor: 'rgba(255,107,107,0.3)', fontSize: '0.75rem', padding: '0.4rem 0.8rem' }}>
+                  <Trash2 size={12} /> Limpiar Todo
+                </button>
+              </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
                 {trees.slice().reverse().map(tree => (
-                  <div key={tree.id} className="tree-record">
-                    <strong>{tree.treeName}</strong> — <span style={{ color: 'var(--green-300)', fontSize: '0.88rem' }}>{tree.species}</span><br />
-                    <small>{tree.isCompany ? `🏢 ${tree.companyName} (NIT: ${tree.nit})` : `✉️ ${tree.email}`}</small>
+                  <div key={tree.id} className="tree-record" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <strong>{tree.treeName}</strong> — <span style={{ color: 'var(--green-300)', fontSize: '0.88rem' }}>{tree.species}</span><br />
+                      <small>{tree.isCompany ? `🏢 ${tree.companyName} (NIT: ${tree.nit})` : `✉️ ${tree.email}`}</small>
+                    </div>
+                    <button type="button" onClick={() => handleDelete(tree.id)} className="btn-secondary" style={{ padding: '0.4rem', border: 'none', color: '#ff6b6b' }}>
+                      <Trash2 size={16} />
+                    </button>
                   </div>
                 ))}
               </div>

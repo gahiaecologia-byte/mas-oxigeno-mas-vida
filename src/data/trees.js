@@ -51,3 +51,9 @@ export const addTree = (newTree) => {
   trees.push(newTree);
   localStorage.setItem('adopta_arboles', JSON.stringify(trees));
 };
+
+export const deleteTree = (id) => {
+  const trees = getTrees();
+  const filtered = trees.filter(t => t.id !== id);
+  localStorage.setItem('adopta_arboles', JSON.stringify(filtered));
+};
