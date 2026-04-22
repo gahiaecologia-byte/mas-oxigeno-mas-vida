@@ -582,10 +582,11 @@ body{
 .hero-mid-area {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: flex-end;
+  align-items: center; /* Cambiado de flex-end a center para subirlo */
   gap: 2rem;
   flex: 1;
   position: relative;
+  margin-top: -80px; /* Desplazamiento hacia arriba en bloque */
 }
 
 .sammy-side-container {
@@ -646,7 +647,7 @@ body{
 }
 
 .search-card-v2 {
-  background: rgba(7,26,14,0.85); /* Verde muy oscuro traslúcido */
+  background: rgba(7,26,14,0.85);
   backdrop-filter: blur(15px);
   border: 2px solid rgba(32,138,81,0.3);
   padding: 3rem;
@@ -654,7 +655,7 @@ body{
   width: 100%;
   max-width: 600px;
   z-index: 10;
-  margin-bottom: 2rem;
+  margin-top: 50px; /* Espacio para que no choque arriba */
   box-shadow: 0 40px 80px rgba(0,0,0,0.8);
 }
 
