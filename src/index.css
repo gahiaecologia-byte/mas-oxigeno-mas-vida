@@ -847,3 +847,50 @@ body{
     height: 60px;
   }
 }
+
+/* ─── GAHIA PULSE & HINT ─── */
+.gahia-pulse {
+  position: relative;
+  animation: gahiaPulseEffect 2.5s infinite;
+  cursor: pointer;
+}
+
+@keyframes gahiaPulseEffect {
+  0% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(32,138,81,0)); }
+  50% { transform: scale(1.05); filter: drop-shadow(0 0 20px rgba(32,138,81,0.6)); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(32,138,81,0)); }
+}
+
+.pulse-hint {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a7a47;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  white-space: nowrap;
+  opacity: 0.8;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* ─── REFINED ADOPTION GRAPHICS ─── */
+.search-card-v2 .stats-row-v2 {
+  background: rgba(255,255,255,0.05);
+  border-radius: 25px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.no-print {
+  display: flex !important;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}

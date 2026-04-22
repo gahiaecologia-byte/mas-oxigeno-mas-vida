@@ -39,17 +39,17 @@ export default function AdminPanel({ onBack }) {
 
   const handleDelete = id => {
     const key = window.prompt('Para eliminar un registro, ingresa la CLAVE MAESTRA:');
-    if (key === MASTER_DELETE_KEY) {
+    if (key && key.trim().toUpperCase() === MASTER_DELETE_KEY) {
       deleteTree(id);
       setTrees(getTrees());
     } else if (key !== null) {
-      alert('Clave maestra incorrecta. No tienes permisos para borrar.');
+      alert('Clave maestra incorrecta. Asegúrate de escribirla en MAYÚSCULAS.');
     }
   };
 
   const handleClearExamples = () => {
     const key = window.prompt('Para borrar TODA la base de datos, ingresa la CLAVE MAESTRA:');
-    if (key === MASTER_DELETE_KEY) {
+    if (key && key.trim().toUpperCase() === MASTER_DELETE_KEY) {
       if (window.confirm('¿ESTÁS ABSOLUTAMENTE SEGURO? Esta acción no se puede deshacer.')) {
         localStorage.setItem('adopta_arboles', JSON.stringify([]));
         setTrees([]);

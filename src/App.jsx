@@ -2,11 +2,7 @@ import React, { useState } from 'react';
 import { getTrees } from './data/trees';
 import AdminPanel from './AdminPanel';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import {
-  Search, MapPin, ArrowLeft, Leaf, Globe,
-  MessageCircle, PlayCircle, Newspaper, Download,
-  AlertCircle, Building, Instagram, Facebook, Youtube
-} from 'lucide-react';
+import { Search, AlertCircle, MessageCircle, Newspaper, Globe, ArrowLeft, Instagram, Facebook, Youtube, PlayCircle, Building, Download } from 'lucide-react';
 import L from 'leaflet';
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
@@ -100,7 +96,7 @@ const CertificateModal = ({ trees, isCorporate, companyName, nit, onClose }) => 
         </p>
         <div className="cert-footer">
           <div style={{ textAlign: 'center' }}>
-            <img src="/logo-sammy-full.png" alt="Sammy" style={{ height: 150, objectFit: 'contain' }} className="sammy-mascot" />
+            <img src="/logo-sammy-full.png" alt="Sammy" style={{ height: 200, objectFit: 'contain' }} />
             <div style={{ fontWeight: 700, color: '#1a7a47', marginTop: 4 }}>Sammy LA PAVA</div>
           </div>
           <div className="cert-signature">
@@ -109,6 +105,9 @@ const CertificateModal = ({ trees, isCorporate, companyName, nit, onClose }) => 
             <div style={{ fontSize: '0.75rem', color: '#888' }}>NIT: 901988628-3</div>
           </div>
         </div>
+        <button className="btn-primary no-print" onClick={() => window.print()} style={{ marginTop: '2rem', width: '100%', justifyContent: 'center', gap: 10, fontSize: '1.2rem' }}>
+          <Download size={22} /> Descargar / Imprimir Certificado
+        </button>
       </div>
     </div>
   );
@@ -440,8 +439,9 @@ export default function App() {
         <main className="main-content home-redesign-v2">
           {/* Fila Superior: Logos y Texto Gigante */}
           <div className="hero-top-row">
-            <div className="hero-logo-item" onClick={() => setShowContactModal(true)}>
+            <div className="hero-logo-item gahia-pulse" onClick={() => setShowContactModal(true)}>
               <img src="/logo-gahia.png" alt="Gahia Bio" className="gahia-logo-main" />
+              <div className="pulse-hint">¡Conócenos!</div>
             </div>
             <div className="hero-text-item" onClick={() => setShowAdoptModal(true)}>
               <img src="/logo-oxigeno.png" alt="+ Oxígeno + Vida" className="oxigeno-logo-top" />
