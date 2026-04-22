@@ -565,9 +565,13 @@ body{
 }
 
 .oxigeno-logo-top {
-  height: 140px;
-  filter: drop-shadow(0 10px 30px rgba(45,180,90,0.4));
+  height: 350px; /* Tamaño monumental (3x) */
+  filter: drop-shadow(0 15px 40px rgba(45,180,90,0.5));
   cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.oxigeno-logo-top:hover {
+  transform: scale(1.05);
 }
 
 .huge-text-oxigeno {
