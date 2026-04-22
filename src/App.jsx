@@ -129,6 +129,13 @@ const ContactModal = ({ onClose }) => (
           <a href="https://www.instagram.com/gahiabio" target="_blank" rel="noreferrer" className="social-btn instagram" style={{ justifyContent: 'center' }}>📸 Instagram</a>
           <a href="https://www.facebook.com/gahiabio" target="_blank" rel="noreferrer" className="social-btn facebook" style={{ justifyContent: 'center' }}>📘 Facebook</a>
           <a href="https://www.youtube.com/@gahiabio" target="_blank" rel="noreferrer" className="social-btn youtube" style={{ justifyContent: 'center' }}>▶️ YouTube</a>
+          
+          <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid #eee' }}>
+            <p style={{ fontSize: '0.8rem', color: '#888', marginBottom: '0.5rem' }}>Identidad Visual</p>
+            <a href="/app-icon.png" download="Logo-Oficial-Oxigeno-Vida.png" className="btn-secondary" style={{ justifyContent: 'center', fontSize: '0.8rem', borderStyle: 'dashed' }}>
+              📥 Descargar Logo Oficial
+            </a>
+          </div>
         </div>
       </div>
     </div>
