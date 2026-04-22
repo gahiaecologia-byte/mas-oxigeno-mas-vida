@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { getTrees, addTree, deleteTree } from './data/trees';
+import { getTrees, addTree, deleteTree, updateTree } from './data/trees';
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
-import { ArrowLeft, Save, MapPin, Building, User, CheckCircle, Trash2, Camera, X } from 'lucide-react';
+import { ArrowLeft, Save, MapPin, Building, User, CheckCircle, Trash2, Camera, X, RefreshCw } from 'lucide-react';
 
 const LocationPicker = ({ position, setPosition }) => {
   useMapEvents({ click(e) { setPosition([e.latlng.lat, e.latlng.lng]); } });
@@ -20,6 +20,34 @@ export default function AdminPanel({ onBack, isMaster }) {
   const [position, setPosition] = useState([4.5709, -74.2973]);
   const [successMsg, setSuccessMsg] = useState('');
   const [isLocating, setIsLocating] = useState(false);
+
+  const handleSelectTree = (tree) => {
+    setSelectedTree(tree);
+    setIsCompany(tree.isCompany);
+    setFormData({
+      email: tree.email || '',
+      adopterName: tree.adopterName || '',
+      nit: tree.nit || '',
+      companyName: tree.companyName || '',
+      treeName: tree.treeName,
+      species: tree.species,
+      location: tree.location,
+      photoUrl: tree.photoUrl || '',
+      plantedDate: tree.plantedDate,
+    });
+    setPosition(tree.coordinates);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleCancelEdit = () => {
+    setSelectedTree(null);
+    setFormData({
+      email: '', adopterName: '', nit: '', companyName: '',
+      treeName: '', species: '', location: '', photoUrl: '',
+      plantedDate: new Date().toISOString().split('T')[0],
+    });
+    setPosition([4.5709, -74.2973]);
+  };
 
   const handleGetLocation = () => {
     if (!navigator.geolocation) { alert('Geolocalización no soportada.'); return; }
@@ -42,8 +70,9 @@ export default function AdminPanel({ onBack, isMaster }) {
     const key = window.prompt('Para eliminar un registro, ingresa la CLAVE MAESTRA:');
     if (key && key.trim().toUpperCase() === MASTER_DELETE_KEY) {
       deleteTree(id);
-      setTrees(getTrees());
-      if (selectedTree?.id === id) setSelectedTree(null);
+      const updated = getTrees();
+      setTrees(updated);
+      if (selectedTree?.id === id) handleCancelEdit();
     } else if (key !== null) {
       alert('Clave maestra incorrecta. Asegúrate de escribirla en MAYÚSCULAS.');
     }
@@ -55,7 +84,7 @@ export default function AdminPanel({ onBack, isMaster }) {
       if (window.confirm('¿ESTÁS ABSOLUTAMENTE SEGURO? Esta acción no se puede deshacer.')) {
         localStorage.setItem('adopta_arboles', JSON.stringify([]));
         setTrees([]);
-        setSelectedTree(null);
+        handleCancelEdit();
       }
     } else if (key !== null) {
       alert('Clave maestra incorrecta.');
@@ -64,12 +93,25 @@ export default function AdminPanel({ onBack, isMaster }) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    addTree({ ...formData, isCompany, id: `arb-${Date.now()}`, coordinates: position,
-      message: isCompany ? 'Aporte corporativo al medio ambiente.' : '¡Un nuevo árbol plantado con amor!' });
+    if (selectedTree) {
+      const updated = {
+        ...selectedTree,
+        ...formData,
+        isCompany,
+        coordinates: position,
+      };
+      updateTree(updated);
+      setSuccessMsg('¡Registro actualizado correctamente!');
+    } else {
+      addTree({ ...formData, isCompany, id: `arb-${Date.now()}`, coordinates: position,
+        message: isCompany ? 'Aporte corporativo al medio ambiente.' : '¡Un nuevo árbol plantado con amor!' });
+      setSuccessMsg('¡Árbol registrado exitosamente!');
+    }
     setTrees(getTrees());
-    setSuccessMsg('¡Árbol registrado exitosamente!');
-    setFormData({ email: '', adopterName: '', nit: '', companyName: '', treeName: '', species: '', location: '', photoUrl: '',
-      plantedDate: new Date().toISOString().split('T')[0] });
+    if (!selectedTree) {
+      setFormData({ email: '', adopterName: '', nit: '', companyName: '', treeName: '', species: '', location: '', photoUrl: '',
+        plantedDate: new Date().toISOString().split('T')[0] });
+    }
     setTimeout(() => setSuccessMsg(''), 4000);
   };
 
@@ -88,9 +130,15 @@ export default function AdminPanel({ onBack, isMaster }) {
       <div className="admin-container">
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
 
-          {/* FORM */}
           <div className="admin-card">
-            <h2>Agregar Nuevo Árbol</h2>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+              <h2 style={{ margin: 0 }}>{selectedTree ? 'Editar Árbol' : 'Agregar Nuevo Árbol'}</h2>
+              {selectedTree && (
+                <button onClick={handleCancelEdit} className="btn-secondary" style={{ fontSize: '0.8rem', padding: '0.4rem 0.8rem', color: '#ff6b6b' }}>
+                  <X size={14} /> Cancelar Edición
+                </button>
+              )}
+            </div>
             <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.5rem' }}>
               <button type="button" className={!isCompany ? 'btn-primary' : 'btn-secondary'}
                 style={{ flex: 1, padding: '0.7rem', justifyContent: 'center', display: 'flex', alignItems: 'center', gap: 6 }}
@@ -199,18 +247,17 @@ export default function AdminPanel({ onBack, isMaster }) {
                 </div>
               </div>
 
-              <button type="submit" className="btn-primary" style={{ marginTop: '0.5rem' }}>
-                <Save size={17} /> Guardar Árbol en el Sistema
+              <button type="submit" className={selectedTree ? "btn-primary update" : "btn-primary"} style={{ marginTop: '0.5rem', background: selectedTree ? 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)' : '' }}>
+                {selectedTree ? <><RefreshCw size={17} /> Actualizar Información</> : <><Save size={17} /> Guardar Árbol en el Sistema</>}
               </button>
             </form>
           </div>
 
-          {/* MAP + RECORDS */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <div style={{ height: 360, borderRadius: 16, overflow: 'hidden', border: '1px solid rgba(45,180,90,0.2)', boxShadow: '0 8px 30px rgba(0,0,0,0.3)' }}>
               <MapContainer center={selectedTree ? selectedTree.coordinates : position} zoom={selectedTree ? 18 : (position[0] === 4.5709 ? 6 : 16)} style={{ height: '100%', width: '100%' }}>
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                {!selectedTree && <LocationPicker position={position} setPosition={setPosition} />}
+                <LocationPicker position={position} setPosition={setPosition} />
                 {selectedTree && <Marker position={selectedTree.coordinates} />}
               </MapContainer>
             </div>
@@ -223,29 +270,14 @@ export default function AdminPanel({ onBack, isMaster }) {
                     <Trash2 size={12} /> Limpiar Todo
                   </button>
                 </div>
-                
-                {selectedTree && (
-                  <div style={{ background: 'rgba(32,138,81,0.1)', padding: '1rem', borderRadius: 12, marginBottom: '1rem', border: '1px solid var(--green-400)', position: 'relative' }}>
-                    <button onClick={() => setSelectedTree(null)} style={{ position: 'absolute', right: 10, top: 10, background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}><X size={16} /></button>
-                    <h3 style={{ margin: '0 0 0.5rem 0', color: 'var(--green-300)' }}>Detalles de {selectedTree.treeName}</h3>
-                    <div style={{ display: 'flex', gap: '1rem' }}>
-                      {selectedTree.photoUrl && <img src={selectedTree.photoUrl} alt="Arbol" style={{ width: 80, height: 80, borderRadius: 8, objectFit: 'cover' }} />}
-                      <div style={{ fontSize: '0.85rem' }}>
-                        <p><strong>Especie:</strong> {selectedTree.species}</p>
-                        <p><strong>Fecha:</strong> {selectedTree.plantedDate}</p>
-                        <p><strong>Adoptante:</strong> {selectedTree.isCompany ? selectedTree.companyName : selectedTree.adopterName}</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
                   {trees.slice().reverse().map(tree => (
                     <div 
                       key={tree.id} 
                       className={`tree-record ${selectedTree?.id === tree.id ? 'active' : ''}`} 
-                      style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', padding: '0.8rem', background: selectedTree?.id === tree.id ? 'rgba(32,138,81,0.2)' : '', borderRadius: 8 }}
-                      onClick={() => setSelectedTree(tree)}
+                      style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', padding: '0.8rem', background: selectedTree?.id === tree.id ? 'rgba(32,138,81,0.2)' : '', borderRadius: 8, border: selectedTree?.id === tree.id ? '1px solid var(--green-400)' : '1px solid transparent' }}
+                      onClick={() => handleSelectTree(tree)}
                     >
                       <div>
                         <strong>{tree.treeName}</strong> — <span style={{ color: 'var(--green-300)', fontSize: '0.88rem' }}>{tree.species}</span><br />

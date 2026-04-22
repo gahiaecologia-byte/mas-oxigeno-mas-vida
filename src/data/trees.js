@@ -57,3 +57,12 @@ export const deleteTree = (id) => {
   const filtered = trees.filter(t => t.id !== id);
   localStorage.setItem('adopta_arboles', JSON.stringify(filtered));
 };
+
+export const updateTree = (updatedTree) => {
+  const trees = getTrees();
+  const index = trees.findIndex(t => t.id === updatedTree.id);
+  if (index !== -1) {
+    trees[index] = updatedTree;
+    localStorage.setItem('adopta_arboles', JSON.stringify(trees));
+  }
+};
