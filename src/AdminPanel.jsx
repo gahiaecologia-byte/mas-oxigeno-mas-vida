@@ -8,8 +8,9 @@ const LocationPicker = ({ position, setPosition }) => {
   return position ? <Marker position={position} /> : null;
 };
 
-export default function AdminPanel({ onBack }) {
+export default function AdminPanel({ onBack, isMaster }) {
   const [trees, setTrees] = useState(getTrees());
+  const [selectedTree, setSelectedTree] = useState(null);
   const [isCompany, setIsCompany] = useState(false);
   const [formData, setFormData] = useState({
     email: '', adopterName: '', nit: '', companyName: '',
@@ -42,6 +43,7 @@ export default function AdminPanel({ onBack }) {
     if (key && key.trim().toUpperCase() === MASTER_DELETE_KEY) {
       deleteTree(id);
       setTrees(getTrees());
+      if (selectedTree?.id === id) setSelectedTree(null);
     } else if (key !== null) {
       alert('Clave maestra incorrecta. Asegúrate de escribirla en MAYÚSCULAS.');
     }
@@ -53,6 +55,7 @@ export default function AdminPanel({ onBack }) {
       if (window.confirm('¿ESTÁS ABSOLUTAMENTE SEGURO? Esta acción no se puede deshacer.')) {
         localStorage.setItem('adopta_arboles', JSON.stringify([]));
         setTrees([]);
+        setSelectedTree(null);
       }
     } else if (key !== null) {
       alert('Clave maestra incorrecta.');
@@ -205,33 +208,63 @@ export default function AdminPanel({ onBack }) {
           {/* MAP + RECORDS */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <div style={{ height: 360, borderRadius: 16, overflow: 'hidden', border: '1px solid rgba(45,180,90,0.2)', boxShadow: '0 8px 30px rgba(0,0,0,0.3)' }}>
-              <MapContainer center={position} zoom={position[0] === 4.5709 ? 6 : 16} style={{ height: '100%', width: '100%' }}>
+              <MapContainer center={selectedTree ? selectedTree.coordinates : position} zoom={selectedTree ? 18 : (position[0] === 4.5709 ? 6 : 16)} style={{ height: '100%', width: '100%' }}>
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <LocationPicker position={position} setPosition={setPosition} />
+                {!selectedTree && <LocationPicker position={position} setPosition={setPosition} />}
+                {selectedTree && <Marker position={selectedTree.coordinates} />}
               </MapContainer>
             </div>
 
-            <div className="admin-card" style={{ maxHeight: 380, overflowY: 'auto' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                <h2 style={{ margin: 0 }}>Registros ({trees.length})</h2>
-                <button type="button" onClick={handleClearExamples} className="btn-secondary" style={{ color: '#ff6b6b', borderColor: 'rgba(255,107,107,0.3)', fontSize: '0.75rem', padding: '0.4rem 0.8rem' }}>
-                  <Trash2 size={12} /> Limpiar Todo
-                </button>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-                {trees.slice().reverse().map(tree => (
-                  <div key={tree.id} className="tree-record" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div>
-                      <strong>{tree.treeName}</strong> — <span style={{ color: 'var(--green-300)', fontSize: '0.88rem' }}>{tree.species}</span><br />
-                      <small>{tree.isCompany ? `🏢 ${tree.companyName} (NIT: ${tree.nit})` : `✉️ ${tree.email}`}</small>
+            {isMaster ? (
+              <div className="admin-card" style={{ maxHeight: 380, overflowY: 'auto' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                  <h2 style={{ margin: 0 }}>Base de Datos ({trees.length})</h2>
+                  <button type="button" onClick={handleClearExamples} className="btn-secondary" style={{ color: '#ff6b6b', borderColor: 'rgba(255,107,107,0.3)', fontSize: '0.75rem', padding: '0.4rem 0.8rem' }}>
+                    <Trash2 size={12} /> Limpiar Todo
+                  </button>
+                </div>
+                
+                {selectedTree && (
+                  <div style={{ background: 'rgba(32,138,81,0.1)', padding: '1rem', borderRadius: 12, marginBottom: '1rem', border: '1px solid var(--green-400)', position: 'relative' }}>
+                    <button onClick={() => setSelectedTree(null)} style={{ position: 'absolute', right: 10, top: 10, background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}><X size={16} /></button>
+                    <h3 style={{ margin: '0 0 0.5rem 0', color: 'var(--green-300)' }}>Detalles de {selectedTree.treeName}</h3>
+                    <div style={{ display: 'flex', gap: '1rem' }}>
+                      {selectedTree.photoUrl && <img src={selectedTree.photoUrl} alt="Arbol" style={{ width: 80, height: 80, borderRadius: 8, objectFit: 'cover' }} />}
+                      <div style={{ fontSize: '0.85rem' }}>
+                        <p><strong>Especie:</strong> {selectedTree.species}</p>
+                        <p><strong>Fecha:</strong> {selectedTree.plantedDate}</p>
+                        <p><strong>Adoptante:</strong> {selectedTree.isCompany ? selectedTree.companyName : selectedTree.adopterName}</p>
+                      </div>
                     </div>
-                    <button type="button" onClick={() => handleDelete(tree.id)} className="btn-secondary" style={{ padding: '0.4rem', border: 'none', color: '#ff6b6b' }}>
-                      <Trash2 size={16} />
-                    </button>
                   </div>
-                ))}
+                )}
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                  {trees.slice().reverse().map(tree => (
+                    <div 
+                      key={tree.id} 
+                      className={`tree-record ${selectedTree?.id === tree.id ? 'active' : ''}`} 
+                      style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', padding: '0.8rem', background: selectedTree?.id === tree.id ? 'rgba(32,138,81,0.2)' : '', borderRadius: 8 }}
+                      onClick={() => setSelectedTree(tree)}
+                    >
+                      <div>
+                        <strong>{tree.treeName}</strong> — <span style={{ color: 'var(--green-300)', fontSize: '0.88rem' }}>{tree.species}</span><br />
+                        <small>{tree.isCompany ? `🏢 ${tree.companyName}` : `✉️ ${tree.email}`}</small>
+                      </div>
+                      <button type="button" onClick={(e) => { e.stopPropagation(); handleDelete(tree.id); }} className="btn-secondary" style={{ padding: '0.4rem', border: 'none', color: '#ff6b6b' }}>
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="admin-card" style={{ textAlign: 'center', padding: '3rem' }}>
+                <CheckCircle size={48} color="var(--green-400)" style={{ marginBottom: '1rem' }} />
+                <h3>Modo de Registro</h3>
+                <p style={{ color: 'var(--gray-400)', fontSize: '0.9rem' }}>Has ingresado como colaborador. Puedes registrar nuevos árboles, pero el acceso a la base de datos está restringido.</p>
+              </div>
+            )}
           </div>
         </div>
       </div>

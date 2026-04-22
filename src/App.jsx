@@ -160,15 +160,25 @@ const AdoptModal = ({ onClose }) => (
           Únete a nuestra campaña y deja una huella positiva en el planeta.
         </p>
         
-        <div style={{ textAlign: 'left', background: '#f9f9f9', padding: '1.5rem', borderRadius: 'var(--radius-md)', marginBottom: '1.5rem' }}>
-          <h3 style={{ color: 'var(--green-400)', marginBottom: '0.5rem' }}>🏢 Para Empresas (Ley 2173)</h3>
-          <p style={{ color: '#444', fontSize: '0.9rem', marginBottom: '1rem' }}>
-            Cumple con la normativa nacional sembrando árboles por cada empleado. Te entregamos certificados legales y georreferenciación.
-          </p>
-          <h3 style={{ color: 'var(--green-400)', marginBottom: '0.5rem' }}>🌱 Para Personas</h3>
-          <p style={{ color: '#444', fontSize: '0.9rem' }}>
-            Adopta un árbol a tu nombre o regálalo a un ser querido. Recibirás actualizaciones de su crecimiento y un certificado de adopción.
-          </p>
+        <div className="adopt-steps-v2">
+          <div className="adopt-step-v2">
+            <div className="step-badge-v2">1</div>
+            <div className="step-icon-v2">🎁</div>
+            <h3>Elige tu Plan</h3>
+            <p>Selecciona si eres persona natural o empresa.</p>
+          </div>
+          <div className="adopt-step-v2">
+            <div className="step-badge-v2">2</div>
+            <div className="step-icon-v2">🌱</div>
+            <h3>Adopta</h3>
+            <p>Realiza tu contribución y dale vida a un nuevo árbol.</p>
+          </div>
+          <div className="adopt-step-v2">
+            <div className="step-badge-v2">3</div>
+            <div className="step-icon-v2">🌟</div>
+            <h3>Certifícate</h3>
+            <p>Obtén tu documento legal y sigue tu árbol en el mapa.</p>
+          </div>
         </div>
         
         <a href="https://wa.me/573508864036?text=Hola%20Gahia%20Bio%2C%20quiero%20adoptar%20un%20árbol%20🌳" target="_blank" rel="noreferrer" className="btn-orange" style={{ display: 'inline-flex', padding: '1rem 2rem', fontSize: '1.1rem', textDecoration: 'none' }}>
@@ -186,9 +196,10 @@ const AdminAuthModal = ({ onLogin, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const k = key.trim().toUpperCase();
     const validKeys = ['GAHIA2026', 'OXIGENO2173', 'SAMMY2024', 'ADMIN-GAHIA', 'GAHIA-MASTER-2026'];
-    if (validKeys.includes(key.trim().toUpperCase())) {
-      onLogin();
+    if (validKeys.includes(k)) {
+      onLogin(k);
     } else {
       setError('Clave de acceso incorrecta');
       setKey('');
@@ -237,6 +248,7 @@ export default function App() {
   const [showAdoptModal, setShowAdoptModal] = useState(false);
   const [showAdminAuth, setShowAdminAuth] = useState(false);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
+  const [accessKey, setAccessKey] = useState('');
   const treesData = getTrees();
 
   const handleSearch = e => {
@@ -258,7 +270,7 @@ export default function App() {
   const resetSearch = () => { setSearchResult(null); setSearchInput(''); setError(''); };
   const calculateCO2 = date => Math.max(1, Math.round(((new Date() - new Date(date)) / (1000 * 60 * 60 * 24 * 365)) * 22));
 
-  if (view === 'admin') return <AdminPanel onBack={() => setView('client')} />;
+  if (view === 'admin') return <AdminPanel onBack={() => setView('client')} isMaster={accessKey === 'GAHIA-MASTER-2026'} />;
 
   if (view === 'media') return (
     <div className="app-container">
@@ -390,7 +402,8 @@ export default function App() {
       {showAdoptModal && <AdoptModal onClose={() => setShowAdoptModal(false)} />}
       {showAdminAuth && (
         <AdminAuthModal
-          onLogin={() => {
+          onLogin={(key) => {
+            setAccessKey(key);
             setIsAdminAuthenticated(true);
             setShowAdminAuth(false);
             setView('admin');
