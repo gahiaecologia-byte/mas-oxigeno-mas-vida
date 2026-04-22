@@ -186,10 +186,11 @@ const AdminAuthModal = ({ onLogin, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (VALID_ACCESS_KEYS.includes(key.toUpperCase().trim())) {
+    const validKeys = ['GAHIA2026', 'OXIGENO2173', 'SAMMY2024', 'ADMIN-GAHIA', 'GAHIA-MASTER-2026'];
+    if (validKeys.includes(key.trim().toUpperCase())) {
       onLogin();
     } else {
-      setError('Llave de acceso incorrecta');
+      setError('Clave de acceso incorrecta');
       setKey('');
     }
   };
@@ -482,14 +483,16 @@ export default function App() {
                   {isLoading ? 'Buscando...' : 'Buscar Árboles'}
                 </button>
               </form>
-              <div className="search-stats">
-                <div className="stat-item">
-                  <div className="stat-value">{treesData.length}</div>
-                  <div className="stat-label">Árboles Sembrados</div>
+              <div className="stats-row-v2">
+                <div className="stat-item-v2">
+                  <span className="stat-icon">🌳</span>
+                  <div className="stat-value-v2">{treesData.length}</div>
+                  <div className="stat-label-v2">Árboles Sembrados</div>
                 </div>
-                <div className="stat-item">
-                  <div className="stat-value">{treesData.reduce((s, t) => s + calculateCO2(t.plantedDate), 0)} kg</div>
-                  <div className="stat-label">CO₂ Absorbido</div>
+                <div className="stat-item-v2">
+                  <span className="stat-icon">☁️</span>
+                  <div className="stat-value-v2">{treesData.reduce((s, t) => s + calculateCO2(t.plantedDate), 0).toFixed(1)} kg</div>
+                  <div className="stat-label-v2">CO₂ Absorbido</div>
                 </div>
               </div>
             </div>
