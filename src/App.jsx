@@ -422,69 +422,60 @@ export default function App() {
       </header>
 
       {!searchResult ? (
-        <main className="main-content home-redesign">
-          <div className="hero-logos">
-            <div className="hero-logo-item" onClick={() => setShowAdoptModal(true)} title="Haz clic para ver cómo adoptar">
-              <img src="/logo-oxigeno.png" alt="+ Oxígeno + Vida" className="huge-logo-oxigeno" />
-              <div className="hero-logo-hint">¿Cómo adoptar?</div>
+        <main className="main-content home-redesign-v2">
+          {/* Fila Superior: Logos y Texto Gigante */}
+          <div className="hero-top-row">
+            <div className="hero-logo-item" onClick={() => setShowContactModal(true)}>
+              <img src="/logo-gahia.png" alt="Gahia Bio" className="gahia-logo-main" />
             </div>
-            <div className="hero-logo-item" onClick={() => setShowContactModal(true)} title="Haz clic para contacto y redes">
-              <img src="/logo-gahia.png" alt="Gahia Bio S.A.S" className="huge-logo-gahia" />
-              <div className="hero-logo-hint">Contacto y Redes</div>
-            </div>
-          </div>
-
-          <div className="sammy-hero-container">
-            <div className="sammy-bubble">
-              ¡Bienvenidos,<br/>+ Oxígeno + Vida!
-            </div>
-            <div className="sammy-assets">
-              <video
-                src="/sammy.webm"
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="sammy-mascot"
-                style={{ height: 270, objectFit: 'contain' }}
-              />
-              <img src="/logo-sammy-text.png.png" alt="Sammy LA PAVA" className="sammy-text-logo" />
+            <div className="hero-text-item" onClick={() => setShowAdoptModal(true)}>
+              <h1 className="huge-text-oxigeno">+ OXÍGENO<br/>+ VIDA</h1>
             </div>
           </div>
 
-          <div className="search-card" style={{ position: 'relative', zIndex: 10 }}>
-            <h1 className="search-title">Encuentra tu <span>Árbol</span></h1>
-            <p className="search-desc">
-              Ingresa tu correo electrónico (Personas) o NIT (Empresas) para ver tu árbol y su impacto ambiental.
-            </p>
-            {error && (
-              <div className="error-message">
-                <AlertCircle size={17} /> {error}
-              </div>
-            )}
-            <form onSubmit={handleSearch} className="search-form">
-              <input
-                type="text"
-                placeholder="correo@ejemplo.com o NIT"
-                value={searchInput}
-                onChange={e => setSearchInput(e.target.value)}
-                className="input-field"
-                id="search-input"
-              />
-              <button type="submit" className="btn-primary" disabled={isLoading} id="btn-buscar">
-                {isLoading ? '🔍 Buscando...' : <><Search size={18} /> Buscar Árboles</>}
-              </button>
-            </form>
-            <div style={{ marginTop: '1.5rem', paddingTop: '1.2rem', borderTop: '1px solid rgba(255,255,255,0.1)', display: 'flex', justifyContent: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--green-400)' }}>{treesData.length}</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--gray-400)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Árboles Sembrados</div>
-              </div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--orange)' }}>
-                  {treesData.reduce((s, t) => s + calculateCO2(t.plantedDate), 0)} kg
+          {/* Área Central: Sammy y Buscador */}
+          <div className="hero-mid-area">
+            <div className="sammy-side-container">
+              <div className="sammy-assets-v2">
+                <div className="sammy-bubble-v2">
+                  ¡Bienvenidos,<br/>+ oxígeno + vida!
                 </div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--gray-400)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>CO₂ Absorbido</div>
+                <video
+                  src="/sammy.webm"
+                  autoPlay loop muted playsInline
+                  className="sammy-mascot-v2"
+                />
+                <img src="/logo-sammy-text.png.png" alt="Sammy" className="sammy-text-logo-v2" />
+              </div>
+            </div>
+
+            <div className="search-card-v2">
+              <h2 className="search-title">Encuentra tu <span>Árbol</span></h2>
+              <p className="search-desc">
+                Ingresa tu correo electrónico (Personas) o NIT (Empresas) para ver tu árbol y su impacto ambiental.
+              </p>
+              {error && <div className="error-message"><AlertCircle size={17} /> {error}</div>}
+              <form onSubmit={handleSearch} className="search-form">
+                <input
+                  type="text"
+                  placeholder="correo@ejemplo.com o NIT"
+                  value={searchInput}
+                  onChange={e => setSearchInput(e.target.value)}
+                  className="input-field"
+                />
+                <button type="submit" className="btn-primary" disabled={isLoading}>
+                  {isLoading ? 'Buscando...' : 'Buscar Árboles'}
+                </button>
+              </form>
+              <div className="search-stats">
+                <div className="stat-item">
+                  <div className="stat-value">{treesData.length}</div>
+                  <div className="stat-label">Árboles Sembrados</div>
+                </div>
+                <div className="stat-item">
+                  <div className="stat-value">{treesData.reduce((s, t) => s + calculateCO2(t.plantedDate), 0)} kg</div>
+                  <div className="stat-label">CO₂ Absorbido</div>
+                </div>
               </div>
             </div>
           </div>
