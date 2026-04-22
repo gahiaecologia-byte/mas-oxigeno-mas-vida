@@ -35,17 +35,27 @@ export default function AdminPanel({ onBack }) {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const MASTER_DELETE_KEY = 'GAHIA-MASTER-2026';
+
   const handleDelete = id => {
-    if (window.confirm('¿Estás seguro de eliminar este registro?')) {
+    const key = window.prompt('Para eliminar un registro, ingresa la CLAVE MAESTRA:');
+    if (key === MASTER_DELETE_KEY) {
       deleteTree(id);
       setTrees(getTrees());
+    } else if (key !== null) {
+      alert('Clave maestra incorrecta. No tienes permisos para borrar.');
     }
   };
 
   const handleClearExamples = () => {
-    if (window.confirm('¿Deseas eliminar TODOS los registros de ejemplo?')) {
-      localStorage.setItem('adopta_arboles', JSON.stringify([]));
-      setTrees([]);
+    const key = window.prompt('Para borrar TODA la base de datos, ingresa la CLAVE MAESTRA:');
+    if (key === MASTER_DELETE_KEY) {
+      if (window.confirm('¿ESTÁS ABSOLUTAMENTE SEGURO? Esta acción no se puede deshacer.')) {
+        localStorage.setItem('adopta_arboles', JSON.stringify([]));
+        setTrees([]);
+      }
+    } else if (key !== null) {
+      alert('Clave maestra incorrecta.');
     }
   };
 

@@ -123,19 +123,27 @@ const ContactModal = ({ onClose }) => (
         <h2 style={{ color: 'var(--green-400)', fontFamily: "'Playfair Display', serif" }}>Contacto Gahia Bio</h2>
         <p style={{ color: '#555', marginBottom: '2rem' }}>Conéctate con nosotros y sé parte del cambio.</p>
         
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 300, margin: '0 auto' }}>
-          <a href="mailto:gahiaecologia@gmail.com" className="btn-secondary" style={{ justifyContent: 'center', color: '#333' }}>📧 gahiaecologia@gmail.com</a>
-          <a href="https://wa.me/573508864036" target="_blank" rel="noreferrer" className="btn-primary" style={{ justifyContent: 'center', background: '#25D366', borderColor: '#25D366' }}>💬 WhatsApp</a>
-          <a href="https://www.instagram.com/gahiabio" target="_blank" rel="noreferrer" className="social-btn instagram" style={{ justifyContent: 'center' }}>📸 Instagram</a>
-          <a href="https://www.facebook.com/gahiabio" target="_blank" rel="noreferrer" className="social-btn facebook" style={{ justifyContent: 'center' }}>📘 Facebook</a>
-          <a href="https://www.youtube.com/@gahiabio" target="_blank" rel="noreferrer" className="social-btn youtube" style={{ justifyContent: 'center' }}>▶️ YouTube</a>
-          
-          <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid #eee' }}>
-            <p style={{ fontSize: '0.8rem', color: '#888', marginBottom: '0.5rem' }}>Identidad Visual</p>
-            <a href="/app-icon.png" download="Logo-Oficial-Oxigeno-Vida.png" className="btn-secondary" style={{ justifyContent: 'center', fontSize: '0.8rem', borderStyle: 'dashed' }}>
-              📥 Descargar Logo Oficial
-            </a>
-          </div>
+        <div className="social-logos-container">
+          <a href="https://www.instagram.com/gahiabio" target="_blank" rel="noreferrer" className="social-icon-link instagram">
+            <Instagram size={40} />
+          </a>
+          <a href="https://www.facebook.com/gahiabio" target="_blank" rel="noreferrer" className="social-icon-link facebook">
+            <Facebook size={40} />
+          </a>
+          <a href="https://www.youtube.com/@gahiabio" target="_blank" rel="noreferrer" className="social-icon-link youtube">
+            <Youtube size={40} />
+          </a>
+          <a href="https://wa.me/573508864036" target="_blank" rel="noreferrer" className="social-icon-link whatsapp">
+            <MessageCircle size={40} />
+          </a>
+        </div>
+
+        <div style={{ marginTop: '2.5rem', borderTop: '2px dashed #eee', paddingTop: '2rem' }}>
+          <h4 style={{ color: '#888', textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '2px', marginBottom: '1rem' }}>Descargas Oficiales</h4>
+          <a href="/app-icon.png" download="Identidad-Gahia-Bio.png" className="btn-primary" style={{ width: '100%', justifyContent: 'center', padding: '1.2rem', fontSize: '1.1rem', background: 'linear-gradient(135deg, #208a51 0%, #1a7a47 100%)', boxShadow: '0 10px 20px rgba(32,138,81,0.3)' }}>
+            📥 Descargar Logo Oficial (+ Oxígeno)
+          </a>
+          <p style={{ fontSize: '0.75rem', color: '#aaa', marginTop: '0.8rem' }}>Usa este logo para tus publicaciones y certificados</p>
         </div>
       </div>
     </div>
