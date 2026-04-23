@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { getTrees } from './data/trees';
+import { getContent } from './data/content';
 import AdminPanel from './AdminPanel';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import { Search, AlertCircle, MessageCircle, Newspaper, Globe, ArrowLeft, Instagram, Facebook, Youtube, PlayCircle, Building, Download, MapPin } from 'lucide-react';
+import { Search, AlertCircle, MessageCircle, Newspaper, Globe, ArrowLeft, Instagram, Facebook, Youtube, PlayCircle, Building, Download, MapPin, Leaf } from 'lucide-react';
 import L from 'leaflet';
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
@@ -113,29 +114,31 @@ const CertificateModal = ({ trees, isCorporate, companyName, nit, onClose }) => 
   );
 };
 
-const ContactModal = ({ onClose }) => (
-  <div className="certificate-modal" onClick={onClose}>
-    <div className="certificate-content contact-modal" onClick={e => e.stopPropagation()}>
-      <button className="btn-secondary" onClick={onClose} style={{ position: 'absolute', top: 16, left: 16, color: '#333', borderColor: '#ccc' }}>✕ Cerrar</button>
-      <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-        <img src="/logo-gahia.png" alt="Gahia Bio" style={{ height: 100, marginBottom: '1rem', objectFit: 'contain' }} />
-        <h2 style={{ color: 'var(--green-400)', fontFamily: "'Playfair Display', serif" }}>Contacto Gahia Bio</h2>
-        <p style={{ color: '#555', marginBottom: '2rem' }}>Conéctate con nosotros y sé parte del cambio.</p>
-        
-        <div className="social-logos-container">
-          <a href="https://www.instagram.com/gahiabio" target="_blank" rel="noreferrer" className="social-icon-link instagram">
-            <Instagram size={40} />
-          </a>
-          <a href="https://www.facebook.com/gahiabio" target="_blank" rel="noreferrer" className="social-icon-link facebook">
-            <Facebook size={40} />
-          </a>
-          <a href="https://www.youtube.com/@gahiabio" target="_blank" rel="noreferrer" className="social-icon-link youtube">
-            <Youtube size={40} />
-          </a>
-          <a href="https://wa.me/573508864036" target="_blank" rel="noreferrer" className="social-icon-link whatsapp">
-            <MessageCircle size={40} />
-          </a>
-        </div>
+const ContactModal = ({ onClose }) => {
+  const content = getContent();
+  return (
+    <div className="certificate-modal" onClick={onClose}>
+      <div className="certificate-content contact-modal" onClick={e => e.stopPropagation()}>
+        <button className="btn-secondary" onClick={onClose} style={{ position: 'absolute', top: 16, left: 16, color: '#333', borderColor: '#ccc' }}>✕ Cerrar</button>
+        <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+          <img src="/logo-gahia.png" alt="Gahia Bio" style={{ height: 100, marginBottom: '1rem', objectFit: 'contain' }} />
+          <h2 style={{ color: 'var(--green-400)', fontFamily: "'Playfair Display', serif" }}>Contacto Gahia Bio</h2>
+          <p style={{ color: '#555', marginBottom: '2rem' }}>Conéctate con nosotros y sé parte del cambio.</p>
+          
+          <div className="social-logos-container">
+            <a href={content.social.instagram} target="_blank" rel="noreferrer" className="social-icon-link instagram">
+              <Instagram size={40} />
+            </a>
+            <a href={content.social.facebook} target="_blank" rel="noreferrer" className="social-icon-link facebook">
+              <Facebook size={40} />
+            </a>
+            <a href={content.social.youtube} target="_blank" rel="noreferrer" className="social-icon-link youtube">
+              <Youtube size={40} />
+            </a>
+            <a href={`https://wa.me/${content.social.whatsapp}`} target="_blank" rel="noreferrer" className="social-icon-link whatsapp">
+              <MessageCircle size={40} />
+            </a>
+          </div>
 
         <div style={{ marginTop: '2.5rem', borderTop: '2px dashed #eee', paddingTop: '2rem' }}>
           <h4 style={{ color: '#888', textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '2px', marginBottom: '1.5rem' }}>Descargar Aplicación Oficial</h4>
@@ -197,45 +200,48 @@ const ContactModal = ({ onClose }) => (
   </div>
 );
 
-const AdoptModal = ({ onClose }) => (
-  <div className="certificate-modal" onClick={onClose}>
-    <div className="certificate-content adopt-modal" onClick={e => e.stopPropagation()}>
-      <button className="btn-secondary" onClick={onClose} style={{ position: 'absolute', top: 16, left: 16, color: '#333', borderColor: '#ccc' }}>✕ Cerrar</button>
-      <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-        <img src="/logo-oxigeno.png" alt="+ Oxígeno + Vida" style={{ height: 100, marginBottom: '1rem', objectFit: 'contain' }} />
-        <h2 style={{ color: 'var(--orange)', fontFamily: "'Playfair Display', serif" }}>¿Cómo Adoptar un Árbol?</h2>
-        <p style={{ color: '#555', marginBottom: '1.5rem', lineHeight: 1.6 }}>
-          Únete a nuestra campaña y deja una huella positiva en el planeta.
-        </p>
-        
-        <div className="adopt-steps-v2">
-          <div className="adopt-step-v2">
-            <div className="step-badge-v2">1</div>
-            <div className="step-icon-v2">🎁</div>
-            <h3>Elige tu Plan</h3>
-            <p>Selecciona si eres persona natural o empresa.</p>
+const AdoptModal = ({ onClose }) => {
+  const content = getContent();
+  return (
+    <div className="certificate-modal" onClick={onClose}>
+      <div className="certificate-content adopt-modal" onClick={e => e.stopPropagation()}>
+        <button className="btn-secondary" onClick={onClose} style={{ position: 'absolute', top: 16, left: 16, color: '#333', borderColor: '#ccc' }}>✕ Cerrar</button>
+        <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+          <img src="/logo-oxigeno.png" alt="+ Oxígeno + Vida" style={{ height: 100, marginBottom: '1rem', objectFit: 'contain' }} />
+          <h2 style={{ color: 'var(--orange)', fontFamily: "'Playfair Display', serif" }}>¿Cómo Adoptar un Árbol?</h2>
+          <p style={{ color: '#555', marginBottom: '1.5rem', lineHeight: 1.6 }}>
+            Únete a nuestra campaña y deja una huella positiva en el planeta.
+          </p>
+          
+          <div className="adopt-steps-v2">
+            <div className="adopt-step-v2">
+              <div className="step-badge-v2">1</div>
+              <div className="step-icon-v2">🎁</div>
+              <h3>Elige tu Plan</h3>
+              <p>Selecciona si eres persona natural o empresa.</p>
+            </div>
+            <div className="adopt-step-v2">
+              <div className="step-badge-v2">2</div>
+              <div className="step-icon-v2">🌱</div>
+              <h3>Adopta</h3>
+              <p>Realiza tu contribución y dale vida a un nuevo árbol.</p>
+            </div>
+            <div className="adopt-step-v2">
+              <div className="step-badge-v2">3</div>
+              <div className="step-icon-v2">🌟</div>
+              <h3>Certifícate</h3>
+              <p>Obtén tu documento legal y sigue tu árbol en el mapa.</p>
+            </div>
           </div>
-          <div className="adopt-step-v2">
-            <div className="step-badge-v2">2</div>
-            <div className="step-icon-v2">🌱</div>
-            <h3>Adopta</h3>
-            <p>Realiza tu contribución y dale vida a un nuevo árbol.</p>
-          </div>
-          <div className="adopt-step-v2">
-            <div className="step-badge-v2">3</div>
-            <div className="step-icon-v2">🌟</div>
-            <h3>Certifícate</h3>
-            <p>Obtén tu documento legal y sigue tu árbol en el mapa.</p>
-          </div>
+          
+          <a href={`https://wa.me/${content.social.whatsapp}?text=Hola%20Gahia%20Bio%2C%20quiero%20adoptar%20un%20árbol%20🌳`} target="_blank" rel="noreferrer" className="btn-orange" style={{ display: 'inline-flex', padding: '1rem 2rem', fontSize: '1.1rem', textDecoration: 'none' }}>
+            ¡Adopta Ahora vía WhatsApp!
+          </a>
         </div>
-        
-        <a href="https://wa.me/573508864036?text=Hola%20Gahia%20Bio%2C%20quiero%20adoptar%20un%20árbol%20🌳" target="_blank" rel="noreferrer" className="btn-orange" style={{ display: 'inline-flex', padding: '1rem 2rem', fontSize: '1.1rem', textDecoration: 'none' }}>
-          ¡Adopta Ahora vía WhatsApp!
-        </a>
       </div>
     </div>
-  </div>
-);
+  );
+};
 const VALID_ACCESS_KEYS = ['GAHIA2026', 'OXIGENO2173', 'SAMMY2024', 'ADMIN-GAHIA'];
 
 const AdminAuthModal = ({ onLogin, onClose }) => {
@@ -306,7 +312,9 @@ export default function App() {
   const [showAdoptModal, setShowAdoptModal] = useState(false);
   const [showAdminAuth, setShowAdminAuth] = useState(false);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
+  const [accessKey, setAccessKey] = useState('');
   const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const content = getContent();
   const treesData = getTrees();
 
   useEffect(() => {
@@ -377,59 +385,53 @@ export default function App() {
           🌿 Explora Gahia
         </h1>
         <p style={{ color: 'var(--gray-400)', marginBottom: '1.5rem' }}>Contenido educativo, noticias y comunidad verde</p>
+        
         <div className="media-grid">
-          <div className="media-card">
-            <h2><PlayCircle size={20} color="var(--green-400)" /> Documental Reforestación</h2>
-            <div className="video-embed">
-              <iframe
-                src="https://www.youtube.com/embed/oarMBDnMGbQ"
-                title="Documental Reforestación Colombia"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+          {content.news.map(item => (
+            <div key={item.id} className="media-card">
+              {item.type === 'video' ? (
+                <>
+                  <h2><PlayCircle size={20} color="var(--green-400)" /> {item.title}</h2>
+                  <div className="video-embed">
+                    <iframe
+                      src={item.videoUrl}
+                      title={item.title}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div style={{ position: 'relative', height: 180, borderRadius: 12, overflow: 'hidden', marginBottom: '1rem' }}>
+                    <img src={item.image} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <div style={{ position: 'absolute', top: 10, right: 10, background: 'var(--orange)', color: 'white', padding: '4px 10px', borderRadius: 20, fontSize: '0.7rem', fontWeight: 600 }}>
+                      NOTICIA
+                    </div>
+                  </div>
+                  <h3><Newspaper size={18} color="var(--orange)" /> {item.title}</h3>
+                </>
+              )}
+              <p>{item.description}</p>
+              {item.type === 'noticia' && (
+                <small style={{ color: 'var(--green-300)', display: 'block', marginTop: '0.5rem' }}>{item.date}</small>
+              )}
             </div>
-            <p>Cómo la siembra de árboles está transformando las cuencas hídricas de Colombia.</p>
-          </div>
+          ))}
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-            <div className="media-card">
-              <h3><Newspaper size={18} color="var(--orange)" /> Ley 2173 de 2021</h3>
-              <p>Las empresas colombianas deben sembrar árboles por cada empleado. Conoce cómo Gahia Bio facilita el cumplimiento.</p>
-              <a
-                href="https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=169971"
-                target="_blank" rel="noreferrer"
-                className="article-link"
-              >
-                Leer Ley completa ↗
+          <div className="media-card" style={{ textAlign: 'center', background: 'linear-gradient(135deg, rgba(32,138,81,0.1) 0%, rgba(10,46,26,0.2) 100%)' }}>
+            <h3 style={{ justifyContent: 'center' }}>📲 Síguenos en Redes</h3>
+            <p style={{ marginBottom: '1.5rem' }}>Únete a nuestra comunidad verde y comparte tu impacto.</p>
+            <div className="social-row">
+              <a href={content.social.instagram} target="_blank" rel="noreferrer" className="social-btn instagram">
+                <Instagram size={15} /> Instagram
               </a>
-            </div>
-
-            <div className="media-card">
-              <h3><Globe size={18} color="var(--green-400)" /> Artículo: Bosques Nativos</h3>
-              <p>La importancia de recuperar los ecosistemas nativos en los Andes colombianos para garantizar el agua.</p>
-              <a
-                href="https://www.wwf.org.co/nuestro_trabajo/bosques/"
-                target="_blank" rel="noreferrer"
-                className="article-link"
-              >
-                Ver en WWF Colombia ↗
+              <a href={content.social.facebook} target="_blank" rel="noreferrer" className="social-btn facebook">
+                <Facebook size={15} /> Facebook
               </a>
-            </div>
-
-            <div className="media-card" style={{ textAlign: 'center' }}>
-              <h3 style={{ justifyContent: 'center' }}>📲 Síguenos en Redes</h3>
-              <p style={{ marginBottom: '1rem' }}>Únete a nuestra comunidad verde y comparte tu impacto.</p>
-              <div className="social-row">
-                <a href="https://www.instagram.com/gahiabio" target="_blank" rel="noreferrer" className="social-btn instagram">
-                  <Instagram size={15} /> Instagram
-                </a>
-                <a href="https://www.facebook.com/gahiabio" target="_blank" rel="noreferrer" className="social-btn facebook">
-                  <Facebook size={15} /> Facebook
-                </a>
-                <a href="https://www.youtube.com/@gahiabio" target="_blank" rel="noreferrer" className="social-btn youtube">
-                  <Youtube size={15} /> YouTube
-                </a>
-              </div>
+              <a href={content.social.youtube} target="_blank" rel="noreferrer" className="social-btn youtube">
+                <Youtube size={15} /> YouTube
+              </a>
             </div>
           </div>
         </div>
@@ -499,7 +501,7 @@ export default function App() {
         />
       )}
 
-      <a href="https://wa.me/573508864036?text=Hola%20Gahia%20Bio%2C%20quiero%20adoptar%20un%20árbol%20🌳"
+      <a href={`https://wa.me/${content.social.whatsapp}?text=Hola%20Gahia%20Bio%2C%20quiero%20adoptar%20un%20árbol%20🌳`}
          className="whatsapp-btn" target="_blank" rel="noreferrer" title="Chatea con Gahia Bio">
         <MessageCircle size={28} />
       </a>
