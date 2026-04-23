@@ -116,7 +116,7 @@ const ContentManager = () => {
         </div>
       </div>
 
-      <div style={{ position: 'sticky', bottom: 20, z-index: 100 }}>
+      <div style={{ position: 'sticky', bottom: 20, zIndex: 100 }}>
         {success && (
           <div className="success-msg" style={{ marginBottom: '1rem', textAlign: 'center', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
             <CheckCircle size={18} /> {success}
