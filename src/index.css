@@ -654,7 +654,7 @@ body{
 .sammy-text-logo-v2 {
   position: absolute;
   left: 45%; 
-  bottom: 5%; /* Cerca de las piernas */
+  bottom: 12%; /* Un poco más arriba para que no se pegue abajo */
   height: 350px; 
   z-index: 6;
   filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));
@@ -1085,9 +1085,9 @@ body{
 
   .sammy-text-logo-v2 {
     position: absolute;
-    top: -40px; /* Arriba de Sammy */
-    left: 10%; /* Un poco a la izquierda */
-    height: 120px; /* Más pequeño */
+    top: -80px; /* ¡Más arriba! Para que no toque a Sammy ni la burbuja */
+    left: 15%; /* Centrado un poco mejor */
+    height: 110px; /* Un pelín más pequeño para que respire */
     z-index: 6;
     filter: drop-shadow(0 8px 15px rgba(0,0,0,0.5));
   }
