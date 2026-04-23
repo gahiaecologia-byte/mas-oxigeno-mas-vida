@@ -1006,3 +1006,69 @@ body{
   color: #666;
   line-height: 1.5;
 }
+/* ─── MOBILE FIXES (LUPA) ─── */
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll; /* Evita que el fondo se gire o rompa en iOS/Android */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center top;
+  }
+
+  .hero-top-row {
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .gahia-logo-main {
+    height: 90px;
+  }
+
+  .oxigeno-logo-top {
+    height: 200px;
+  }
+
+  .hero-mid-area {
+    grid-template-columns: 1fr;
+    margin-top: 0;
+    gap: 3rem;
+  }
+
+  .sammy-mascot-v2 {
+    height: 400px !important;
+    margin-left: 0;
+  }
+
+  .sammy-bubble-v2 {
+    top: -10%; /* Sube para no tapar la cara */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.1rem;
+    padding: 12px 20px;
+    white-space: normal;
+    width: 80%;
+  }
+
+  .sammy-bubble-v2::after {
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 20px 15px 0 15px;
+    border-color: #071a0e transparent transparent transparent;
+  }
+
+  .search-card-v2 {
+    padding: 2rem 1.5rem;
+    border-radius: 30px;
+  }
+
+  .search-title {
+    font-size: 1.6rem;
+  }
+
+  .stats-row-v2 {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}

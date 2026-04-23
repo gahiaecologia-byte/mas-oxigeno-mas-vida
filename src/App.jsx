@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getTrees } from './data/trees';
 import AdminPanel from './AdminPanel';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import { Search, AlertCircle, MessageCircle, Newspaper, Globe, ArrowLeft, Instagram, Facebook, Youtube, PlayCircle, Building, Download } from 'lucide-react';
+import { Search, AlertCircle, MessageCircle, Newspaper, Globe, ArrowLeft, Instagram, Facebook, Youtube, PlayCircle, Building, Download, MapPin } from 'lucide-react';
 import L from 'leaflet';
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
