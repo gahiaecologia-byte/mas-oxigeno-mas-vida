@@ -138,11 +138,38 @@ const ContactModal = ({ onClose }) => (
         </div>
 
         <div style={{ marginTop: '2.5rem', borderTop: '2px dashed #eee', paddingTop: '2rem' }}>
-          <h4 style={{ color: '#888', textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '2px', marginBottom: '1rem' }}>Descargas Oficiales</h4>
-          <a href="/app-icon.png" download="Identidad-Gahia-Bio.png" className="btn-primary" style={{ width: '100%', justifyContent: 'center', padding: '1.2rem', fontSize: '1.1rem', background: 'linear-gradient(135deg, #208a51 0%, #1a7a47 100%)', boxShadow: '0 10px 20px rgba(32,138,81,0.3)' }}>
-            📥 Descargar Logo Oficial (+ Oxígeno)
-          </a>
-          <p style={{ fontSize: '0.75rem', color: '#aaa', marginTop: '0.8rem' }}>Usa este logo para tus publicaciones y certificados</p>
+          <h4 style={{ color: '#888', textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '2px', marginBottom: '1rem' }}>Descargas y Difusión</h4>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {/* BOTÓN DESCARGAR APP */}
+            <div style={{ background: 'white', border: '2px solid #208a51', borderRadius: '20px', padding: '1rem', display: 'flex', alignItems: 'center', gap: '1rem', textAlign: 'left', boxShadow: '0 5px 15px rgba(0,0,0,0.05)' }}>
+              <img src="/app-icon.png" alt="App Logo" style={{ height: 60, width: 60, borderRadius: 12 }} />
+              <div style={{ flex: 1 }}>
+                <h4 style={{ margin: 0, color: '#1a7a47', fontSize: '1rem' }}>Aplicación Gahia Bio</h4>
+                <p style={{ margin: 0, fontSize: '0.75rem', color: '#666' }}>Instala nuestra App en tu móvil</p>
+              </div>
+              <a href="/app-icon.png" download="Gahia-Bio-App.png" className="btn-primary" style={{ padding: '0.6rem 1rem', fontSize: '0.9rem' }}>
+                Descargar
+              </a>
+            </div>
+
+            {/* BOTÓN COMPARTIR WHATSAPP */}
+            <a 
+              href="https://wa.me/?text=%C2%A1Hola!%20Mira%20esta%20App%20incre%C3%ADble%20de%20Gahia%20Bio%20para%20adoptar%20%C3%A1rboles%20y%20ayudar%20al%20planeta%20%F0%9F%8C%B3%E2%9C%A8%20Puedes%20ver%20tu%20%C3%A1rbol%20y%20el%20impacto%20ambiental%20aqu%C3%AD%3A%20https%3A%2F%2Fmas-oxigeno-mas-vida.vercel.app%2F" 
+              target="_blank" 
+              rel="noreferrer" 
+              className="btn-orange" 
+              style={{ width: '100%', justifyContent: 'center', padding: '1rem', fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '8px' }}
+            >
+              <MessageCircle size={20} /> Compartir App por WhatsApp
+            </a>
+
+            {/* DESCARGAR LOGO */}
+            <a href="/app-icon.png" download="Identidad-Gahia-Bio.png" className="btn-secondary" style={{ width: '100%', justifyContent: 'center', padding: '0.8rem', fontSize: '0.85rem' }}>
+              📥 Descargar Logo Oficial (+ Oxígeno)
+            </a>
+          </div>
+          <p style={{ fontSize: '0.75rem', color: '#aaa', marginTop: '0.8rem' }}>Ayúdanos a crecer compartiendo esta iniciativa</p>
         </div>
       </div>
     </div>
