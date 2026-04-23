@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getTrees } from './data/trees';
 import AdminPanel from './AdminPanel';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
