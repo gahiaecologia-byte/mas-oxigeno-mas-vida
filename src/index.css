@@ -35,6 +35,13 @@
 
 html{scroll-behavior:smooth;}
 
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* Evita el desplazamiento lateral que 'corre' el fondo */
+}
+
 body{
   font-family:'Inter',system-ui,sans-serif;
   background:#071a0e;
@@ -54,8 +61,11 @@ body{
   display:flex;
   flex-direction:column;
   min-height:100vh;
+  width: 100%;
+  max-width: 100vw;
   background:rgba(5,15,8,0.55);
   backdrop-filter:blur(2px);
+  overflow-x: hidden;
 }
 
 /* ─── HEADER ─── */

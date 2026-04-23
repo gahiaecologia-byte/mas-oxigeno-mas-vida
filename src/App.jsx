@@ -599,7 +599,7 @@ export default function App() {
             <h3 style={{ color: 'var(--green-100)', marginBottom: '0.8rem', fontSize: '0.95rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
               Listado de Árboles
             </h3>
-            <div style={{ overflowX: 'auto', borderRadius: 'var(--radius-md)', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.08)' }}>
+            <div style={{ overflowX: 'auto', borderRadius: 'var(--radius-md)', border: '1px solid rgba(255,255,255,0.08)', width: '100%' }}>
               <table className="corp-table">
                 <thead>
                   <tr><th>Nombre/Código</th><th>Especie</th><th>Ubicación</th><th>Fecha</th><th>Mapa</th></tr>
