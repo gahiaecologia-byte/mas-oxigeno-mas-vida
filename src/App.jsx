@@ -141,16 +141,19 @@ const ContactModal = ({ onClose }) => (
           <h4 style={{ color: '#888', textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '2px', marginBottom: '1rem' }}>Descargas y Difusión</h4>
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {/* BOTÓN DESCARGAR APP */}
-            <div style={{ background: 'white', border: '2px solid #208a51', borderRadius: '20px', padding: '1rem', display: 'flex', alignItems: 'center', gap: '1rem', textAlign: 'left', boxShadow: '0 5px 15px rgba(0,0,0,0.05)' }}>
-              <img src="/app-icon.png" alt="App Logo" style={{ height: 60, width: 60, borderRadius: 12 }} />
-              <div style={{ flex: 1 }}>
-                <h4 style={{ margin: 0, color: '#1a7a47', fontSize: '1rem' }}>Aplicación Gahia Bio</h4>
-                <p style={{ margin: 0, fontSize: '0.75rem', color: '#666' }}>Instala nuestra App en tu móvil</p>
+            {/* MANUAL DE INSTALACIÓN */}
+            <div style={{ background: 'rgba(32,138,81,0.05)', borderRadius: '20px', padding: '1.2rem', border: '1px solid rgba(32,138,81,0.2)' }}>
+              <h4 style={{ margin: '0 0 0.8rem 0', color: '#1a7a47', fontSize: '0.9rem', textAlign: 'center' }}>¿Cómo instalar en mi celular?</h4>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem', fontSize: '0.75rem', color: '#444' }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.2rem', marginBottom: '4px' }}>🤖 Android</div>
+                  <p>Toca los <strong>3 puntos</strong> ⋮ y elige <strong>"Instalar App"</strong></p>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.2rem', marginBottom: '4px' }}>🍎 iPhone</div>
+                  <p>Toca <strong>Compartir</strong> ⎋ y elige <strong>"A la pantalla de inicio"</strong></p>
+                </div>
               </div>
-              <a href="/app-icon.png" download="Gahia-Bio-App.png" className="btn-primary" style={{ padding: '0.6rem 1rem', fontSize: '0.9rem' }}>
-                Descargar
-              </a>
             </div>
 
             {/* BOTÓN COMPARTIR WHATSAPP */}
@@ -161,7 +164,7 @@ const ContactModal = ({ onClose }) => (
               className="btn-orange" 
               style={{ width: '100%', justifyContent: 'center', padding: '1rem', fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '8px' }}
             >
-              <MessageCircle size={20} /> Compartir App por WhatsApp
+              <MessageCircle size={20} /> Compartir por WhatsApp
             </a>
 
             {/* DESCARGAR LOGO */}
