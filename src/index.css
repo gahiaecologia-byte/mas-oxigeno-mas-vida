@@ -581,12 +581,13 @@ body{
 
 .hero-mid-area {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center; /* Cambiado de flex-end a center para subirlo */
+  grid-template-columns: 1.2fr 0.8fr; 
+  align-items: center;
   gap: 2rem;
   flex: 1;
   position: relative;
-  margin-top: -80px; /* Desplazamiento hacia arriba en bloque */
+  margin-top: -60px;
+  overflow: visible !important;
 }
 
 .sammy-side-container {
@@ -594,22 +595,24 @@ body{
   height: 100%;
   display: flex;
   align-items: flex-end;
+  overflow: visible !important;
 }
 
 .sammy-assets-v2 {
   position: relative;
   display: flex;
   align-items: flex-end;
+  overflow: visible !important;
 }
 
 .sammy-mascot-v2 {
-  max-height: 85vh; /* Ajuste para que no se corte arriba */
-  height: auto !important;
+  height: 90vh !important; /* Más grande en Web */
+  max-height: 950px;
   width: auto;
   filter: drop-shadow(20px 0 50px rgba(0,0,0,0.6));
   z-index: 5;
-  margin-left: -50px;
-  margin-bottom: -50px; /* Menos recorte abajo */
+  margin-left: -100px;
+  margin-bottom: -20px; 
   animation: sammyZoomEntrance 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   object-fit: contain;
 }
@@ -621,15 +624,15 @@ body{
 
 .sammy-bubble-v2 {
   position: absolute;
-  top: -15%; /* Elevada */
-  left: 75%;
+  top: -30%; /* ¡MUCHO MÁS ARRIBA! */
+  left: 80%;
   background: #208a51;
   color: #071a0e;
   font-family: 'Luckiest Guy', cursive;
-  padding: 20px 35px;
-  border-radius: 40px;
-  font-size: 1.6rem;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+  padding: 22px 38px;
+  border-radius: 50px;
+  font-size: 1.8rem;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
   z-index: 10;
   text-align: center;
   border: 4px solid #071a0e;
@@ -650,11 +653,11 @@ body{
 
 .sammy-text-logo-v2 {
   position: absolute;
-  left: 40%; /* Movido a la izquierda (hacia Sammy) */
-  bottom: 20%;
-  height: 280px; /* EL DOBLE DE GRANDE */
+  left: 45%; 
+  bottom: 5%; /* Cerca de las piernas */
+  height: 350px; 
   z-index: 6;
-  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));
   pointer-events: none;
 }
 
@@ -1047,24 +1050,28 @@ body{
     gap: 3rem;
   }
 
+  .sammy-side-container, .sammy-assets-v2 {
+    overflow: visible !important;
+  }
+
   .sammy-mascot-v2 {
-    max-height: 50vh;
+    max-height: 55vh; /* Un poco más grande */
     height: auto !important;
     width: auto;
     margin-left: 0;
-    margin-bottom: -20px;
+    margin-bottom: 0; /* Sin recorte abajo */
     animation: sammyZoomEntrance 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     object-fit: contain;
   }
 
   .sammy-bubble-v2 {
-    top: -20%;
+    top: -35%; /* ¡MUCHO MÁS ARRIBA! */
     left: 50%;
     transform: translateX(-50%);
-    font-size: 1.1rem;
-    padding: 12px 20px;
+    font-size: 1.15rem;
+    padding: 14px 22px;
     white-space: normal;
-    width: 85%;
+    width: 90%;
     animation: bubbleFloatMobile 2s ease-in-out infinite;
   }
 
