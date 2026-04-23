@@ -140,65 +140,36 @@ const ContactModal = ({ onClose }) => {
             </a>
           </div>
 
-        <div style={{ marginTop: '2.5rem', borderTop: '2px dashed #eee', paddingTop: '2rem' }}>
-          <h4 style={{ color: '#888', textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '2px', marginBottom: '1.5rem' }}>Descargar Aplicación Oficial</h4>
-          
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-            {/* BOTÓN ANDROID ESTILO GOOGLE PLAY */}
-            <button 
-              onClick={() => {
-                const event = new CustomEvent('trigger-pwa-install');
-                window.dispatchEvent(event);
-              }}
-              style={{ 
-                background: '#000', color: 'white', border: '1px solid #444', borderRadius: '12px', padding: '0.8rem 1.5rem', 
-                display: 'flex', alignItems: 'center', gap: '1rem', textAlign: 'left', cursor: 'pointer', transition: '0.3s' 
-              }}
-            >
-              <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg" alt="Android" style={{ height: 32 }} />
-              <div>
-                <div style={{ fontSize: '0.65rem', textTransform: 'uppercase', opacity: 0.8 }}>Disponible para</div>
-                <div style={{ fontSize: '1.1rem', fontWeight: 600 }}>Android (PWA)</div>
-              </div>
-            </button>
-
-            {/* BOTÓN IPHONE ESTILO APP STORE */}
-            <button 
-              onClick={() => alert('Para iPhone: \n1. Toca el botón "Compartir" (cuadro con flecha arriba).\n2. Selecciona "Añadir a la pantalla de inicio".\n3. ¡Listo! Ya tienes tu app de Gahia.')}
-              style={{ 
-                background: '#000', color: 'white', border: '1px solid #444', borderRadius: '12px', padding: '0.8rem 1.5rem', 
-                display: 'flex', alignItems: 'center', gap: '1rem', textAlign: 'left', cursor: 'pointer', transition: '0.3s' 
-              }}
-            >
-              <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" style={{ height: 32, filter: 'invert(1)' }} />
-              <div>
-                <div style={{ fontSize: '0.65rem', textTransform: 'uppercase', opacity: 0.8 }}>Consíguelo en</div>
-                <div style={{ fontSize: '1.1rem', fontWeight: 600 }}>App Store (PWA)</div>
-              </div>
-            </button>
-
-            {/* BOTÓN COMPARTIR WHATSAPP */}
-            <a 
-              href="https://wa.me/?text=%C2%A1Hola!%20Mira%20esta%20App%20incre%C3%ADble%20de%20Gahia%20Bio%20para%20adoptar%20%C3%A1rboles%20y%20ayudar%20al%20planeta%20%F0%9F%8C%B3%E2%9C%A8%20Puedes%20ver%20tu%20%C3%A1rbol%20y%20el%20impacto%20ambiental%20aqu%C3%AD%3A%20https%3A%2F%2Fmas-oxigeno-mas-vida.vercel.app%2F" 
-              target="_blank" 
-              rel="noreferrer" 
-              className="btn-orange" 
-              style={{ width: '100%', justifyContent: 'center', padding: '1rem', fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '8px', borderRadius: '12px' }}
-            >
-              <MessageCircle size={20} /> Compartir por WhatsApp
-            </a>
-
-            {/* DESCARGAR LOGO */}
-            <a href="/app-icon.png" download="Identidad-Gahia-Bio.png" className="btn-secondary" style={{ width: '100%', justifyContent: 'center', padding: '0.8rem', fontSize: '0.85rem' }}>
-              📥 Descargar Logo Oficial (+ Oxígeno)
-            </a>
+          <div style={{ marginTop: '2.5rem', borderTop: '2px dashed #eee', paddingTop: '2rem' }}>
+            <h4 style={{ color: '#888', textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '2px', marginBottom: '1.5rem' }}>Descargar Aplicación Oficial</h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+              <button 
+                onClick={() => window.dispatchEvent(new CustomEvent('trigger-pwa-install'))}
+                style={{ background: '#000', color: 'white', border: '1px solid #444', borderRadius: '12px', padding: '0.8rem 1.5rem', display: 'flex', alignItems: 'center', gap: '1rem', textAlign: 'left', cursor: 'pointer' }}
+              >
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg" alt="Android" style={{ height: 32 }} />
+                <div>
+                  <div style={{ fontSize: '0.65rem', textTransform: 'uppercase', opacity: 0.8 }}>Disponible para</div>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 600 }}>Android (PWA)</div>
+                </div>
+              </button>
+              <button 
+                onClick={() => alert('Para iPhone: \n1. Toca el botón "Compartir".\n2. Selecciona "Añadir a la pantalla de inicio".')}
+                style={{ background: '#000', color: 'white', border: '1px solid #444', borderRadius: '12px', padding: '0.8rem 1.5rem', display: 'flex', alignItems: 'center', gap: '1rem', textAlign: 'left', cursor: 'pointer' }}
+              >
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" style={{ height: 32, filter: 'invert(1)' }} />
+                <div>
+                  <div style={{ fontSize: '0.65rem', textTransform: 'uppercase', opacity: 0.8 }}>Consíguelo en</div>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 600 }}>App Store (PWA)</div>
+                </div>
+              </button>
+            </div>
           </div>
-          <p style={{ fontSize: '0.75rem', color: '#aaa', marginTop: '1rem' }}>Instalación instantánea sin ocupar espacio en memoria.</p>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const AdoptModal = ({ onClose }) => {
   const content = getContent();
@@ -209,31 +180,12 @@ const AdoptModal = ({ onClose }) => {
         <div style={{ textAlign: 'center', marginTop: '2rem' }}>
           <img src="/logo-oxigeno.png" alt="+ Oxígeno + Vida" style={{ height: 100, marginBottom: '1rem', objectFit: 'contain' }} />
           <h2 style={{ color: 'var(--orange)', fontFamily: "'Playfair Display', serif" }}>¿Cómo Adoptar un Árbol?</h2>
-          <p style={{ color: '#555', marginBottom: '1.5rem', lineHeight: 1.6 }}>
-            Únete a nuestra campaña y deja una huella positiva en el planeta.
-          </p>
-          
+          <p style={{ color: '#555', marginBottom: '1.5rem', lineHeight: 1.6 }}>Únete a nuestra campaña y deja una huella positiva en el planeta.</p>
           <div className="adopt-steps-v2">
-            <div className="adopt-step-v2">
-              <div className="step-badge-v2">1</div>
-              <div className="step-icon-v2">🎁</div>
-              <h3>Elige tu Plan</h3>
-              <p>Selecciona si eres persona natural o empresa.</p>
-            </div>
-            <div className="adopt-step-v2">
-              <div className="step-badge-v2">2</div>
-              <div className="step-icon-v2">🌱</div>
-              <h3>Adopta</h3>
-              <p>Realiza tu contribución y dale vida a un nuevo árbol.</p>
-            </div>
-            <div className="adopt-step-v2">
-              <div className="step-badge-v2">3</div>
-              <div className="step-icon-v2">🌟</div>
-              <h3>Certifícate</h3>
-              <p>Obtén tu documento legal y sigue tu árbol en el mapa.</p>
-            </div>
+            <div className="adopt-step-v2"><h3>1. Elige tu Plan</h3><p>Natural o Empresa.</p></div>
+            <div className="adopt-step-v2"><h3>2. Adopta</h3><p>Realiza tu contribución.</p></div>
+            <div className="adopt-step-v2"><h3>3. Certifícate</h3><p>Obtén tu documento legal.</p></div>
           </div>
-          
           <a href={`https://wa.me/${content.social.whatsapp}?text=Hola%20Gahia%20Bio%2C%20quiero%20adoptar%20un%20árbol%20🌳`} target="_blank" rel="noreferrer" className="btn-orange" style={{ display: 'inline-flex', padding: '1rem 2rem', fontSize: '1.1rem', textDecoration: 'none' }}>
             ¡Adopta Ahora vía WhatsApp!
           </a>
