@@ -192,6 +192,7 @@ const VALID_ACCESS_KEYS = ['GAHIA2026', 'OXIGENO2173', 'SAMMY2024', 'ADMIN-GAHIA
 
 const AdminAuthModal = ({ onLogin, onClose }) => {
   const [key, setKey] = useState('');
+  const [showKey, setShowKey] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
@@ -219,14 +220,23 @@ const AdminAuthModal = ({ onLogin, onClose }) => {
         </p>
         <form onSubmit={handleSubmit}>
           <input
-            type="password"
+            type={showKey ? "text" : "password"}
             placeholder="Llave de acceso"
             value={key}
             onChange={(e) => setKey(e.target.value)}
             className="input-field"
             autoFocus
-            style={{ textAlign: 'center', fontSize: '1.2rem', letterSpacing: '4px', color: '#333', borderColor: '#ccc' }}
+            style={{ textAlign: 'center', fontSize: '1.2rem', letterSpacing: showKey ? '2px' : '4px', color: '#333', borderColor: '#ccc' }}
           />
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginTop: '1rem', cursor: 'pointer' }} onClick={() => setShowKey(!showKey)}>
+            <input 
+              type="checkbox" 
+              checked={showKey} 
+              onChange={() => {}} 
+              style={{ cursor: 'pointer', width: '16px', height: '16px' }} 
+            />
+            <span style={{ fontSize: '0.85rem', color: '#666' }}>Ver clave mientras ingreso</span>
+          </div>
           {error && <p style={{ color: '#ff6b6b', fontSize: '0.85rem', marginTop: '0.5rem' }}>{error}</p>}
           <button type="submit" className="btn-primary" style={{ width: '100%', marginTop: '1.5rem', justifyContent: 'center' }}>
             Ingresar al Panel
