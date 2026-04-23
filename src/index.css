@@ -603,16 +603,23 @@ body{
 }
 
 .sammy-mascot-v2 {
-  height: 600px !important;
+  height: 650px !important;
   filter: drop-shadow(20px 0 50px rgba(0,0,0,0.6));
   z-index: 5;
   margin-left: -50px;
+  margin-bottom: -150px; /* Se asoma desde abajo */
+  animation: sammyEntranceDesktop 1.8s ease-out forwards;
+}
+
+@keyframes sammyEntranceDesktop {
+  0% { transform: translateY(400px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
 }
 
 .sammy-bubble-v2 {
   position: absolute;
-  top: 5%; /* Más arriba */
-  left: 70%; /* Más a la derecha para no tapar la cara */
+  top: -10%; /* Mucho más arriba */
+  left: 75%; /* Más a la derecha */
   background: #208a51;
   color: #071a0e;
   font-family: 'Luckiest Guy', cursive;
@@ -624,6 +631,7 @@ body{
   text-align: center;
   border: 4px solid #071a0e;
   white-space: nowrap;
+  animation: bubbleFloat 3s ease-in-out infinite;
 }
 
 .sammy-bubble-v2::after {
@@ -1036,18 +1044,31 @@ body{
   }
 
   .sammy-mascot-v2 {
-    height: 400px !important;
-    margin-left: 0;
+    height: 450px !important;
+    margin-left: -20px;
+    margin-bottom: -120px; /* Se "sale" de la pantalla por abajo */
+    animation: sammyEntrance 1.5s ease-out forwards;
   }
 
   .sammy-bubble-v2 {
-    top: -10%; /* Sube para no tapar la cara */
+    top: -30%; /* Mucho más arriba */
     left: 50%;
     transform: translateX(-50%);
     font-size: 1.1rem;
     padding: 12px 20px;
     white-space: normal;
     width: 80%;
+    animation: bubbleFloat 2s ease-in-out infinite;
+  }
+
+  @keyframes sammyEntrance {
+    0% { transform: translateY(300px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes bubbleFloat {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-10px); }
   }
 
   .sammy-bubble-v2::after {
