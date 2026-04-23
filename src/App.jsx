@@ -468,6 +468,9 @@ export default function App() {
           ) : null}
         </div>
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <button className="nav-btn" onClick={() => setShowContactModal(true)} style={{ color: 'var(--green-400)', border: '1px solid var(--green-400)' }}>
+            <Download size={14} /> <span className="hide-mobile">Instalar App</span>
+          </button>
           <button className="nav-btn" onClick={() => setView('media')}>
             <Newspaper size={14} /> Noticias
           </button>
