@@ -138,23 +138,41 @@ const ContactModal = ({ onClose }) => (
         </div>
 
         <div style={{ marginTop: '2.5rem', borderTop: '2px dashed #eee', paddingTop: '2rem' }}>
-          <h4 style={{ color: '#888', textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '2px', marginBottom: '1rem' }}>Descargas y Difusión</h4>
+          <h4 style={{ color: '#888', textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '2px', marginBottom: '1.5rem' }}>Descargar Aplicación Oficial</h4>
           
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {/* MANUAL DE INSTALACIÓN */}
-            <div style={{ background: 'rgba(32,138,81,0.05)', borderRadius: '20px', padding: '1.2rem', border: '1px solid rgba(32,138,81,0.2)' }}>
-              <h4 style={{ margin: '0 0 0.8rem 0', color: '#1a7a47', fontSize: '0.9rem', textAlign: 'center' }}>¿Cómo instalar en mi celular?</h4>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem', fontSize: '0.75rem', color: '#444' }}>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.2rem', marginBottom: '4px' }}>🤖 Android</div>
-                  <p>Toca los <strong>3 puntos</strong> ⋮ y elige <strong>"Instalar App"</strong></p>
-                </div>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.2rem', marginBottom: '4px' }}>🍎 iPhone</div>
-                  <p>Toca <strong>Compartir</strong> ⎋ y elige <strong>"A la pantalla de inicio"</strong></p>
-                </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+            {/* BOTÓN ANDROID ESTILO GOOGLE PLAY */}
+            <button 
+              onClick={() => {
+                const event = new CustomEvent('trigger-pwa-install');
+                window.dispatchEvent(event);
+              }}
+              style={{ 
+                background: '#000', color: 'white', border: '1px solid #444', borderRadius: '12px', padding: '0.8rem 1.5rem', 
+                display: 'flex', alignItems: 'center', gap: '1rem', textAlign: 'left', cursor: 'pointer', transition: '0.3s' 
+              }}
+            >
+              <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg" alt="Android" style={{ height: 32 }} />
+              <div>
+                <div style={{ fontSize: '0.65rem', textTransform: 'uppercase', opacity: 0.8 }}>Disponible para</div>
+                <div style={{ fontSize: '1.1rem', fontWeight: 600 }}>Android (PWA)</div>
               </div>
-            </div>
+            </button>
+
+            {/* BOTÓN IPHONE ESTILO APP STORE */}
+            <button 
+              onClick={() => alert('Para iPhone: \n1. Toca el botón "Compartir" (cuadro con flecha arriba).\n2. Selecciona "Añadir a la pantalla de inicio".\n3. ¡Listo! Ya tienes tu app de Gahia.')}
+              style={{ 
+                background: '#000', color: 'white', border: '1px solid #444', borderRadius: '12px', padding: '0.8rem 1.5rem', 
+                display: 'flex', alignItems: 'center', gap: '1rem', textAlign: 'left', cursor: 'pointer', transition: '0.3s' 
+              }}
+            >
+              <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" style={{ height: 32, filter: 'invert(1)' }} />
+              <div>
+                <div style={{ fontSize: '0.65rem', textTransform: 'uppercase', opacity: 0.8 }}>Consíguelo en</div>
+                <div style={{ fontSize: '1.1rem', fontWeight: 600 }}>App Store (PWA)</div>
+              </div>
+            </button>
 
             {/* BOTÓN COMPARTIR WHATSAPP */}
             <a 
@@ -162,7 +180,7 @@ const ContactModal = ({ onClose }) => (
               target="_blank" 
               rel="noreferrer" 
               className="btn-orange" 
-              style={{ width: '100%', justifyContent: 'center', padding: '1rem', fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '8px' }}
+              style={{ width: '100%', justifyContent: 'center', padding: '1rem', fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '8px', borderRadius: '12px' }}
             >
               <MessageCircle size={20} /> Compartir por WhatsApp
             </a>
@@ -172,7 +190,7 @@ const ContactModal = ({ onClose }) => (
               📥 Descargar Logo Oficial (+ Oxígeno)
             </a>
           </div>
-          <p style={{ fontSize: '0.75rem', color: '#aaa', marginTop: '0.8rem' }}>Ayúdanos a crecer compartiendo esta iniciativa</p>
+          <p style={{ fontSize: '0.75rem', color: '#aaa', marginTop: '1rem' }}>Instalación instantánea sin ocupar espacio en memoria.</p>
         </div>
       </div>
     </div>
@@ -288,8 +306,37 @@ export default function App() {
   const [showAdoptModal, setShowAdoptModal] = useState(false);
   const [showAdminAuth, setShowAdminAuth] = useState(false);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
-  const [accessKey, setAccessKey] = useState('');
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
   const treesData = getTrees();
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    const handleTriggerInstall = () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the A2HS prompt');
+          }
+          setDeferredPrompt(null);
+        });
+      } else {
+        alert('Para Android: Toca los 3 puntos ⋮ en tu navegador y elige "Instalar aplicación".\nEn iPhone: Usa el botón Compartir y "Añadir a pantalla de inicio".');
+      }
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('trigger-pwa-install', handleTriggerInstall);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('trigger-pwa-install', handleTriggerInstall);
+    };
+  }, [deferredPrompt]);
 
   const handleSearch = e => {
     e.preventDefault();
