@@ -624,7 +624,7 @@ body{
 
 .sammy-bubble-v2 {
   position: absolute;
-  top: -30%; /* ¡MUCHO MÁS ARRIBA! */
+  top: -5%; /* Bajada para no tapar el logo gigante de arriba */
   left: 80%;
   background: #208a51;
   color: #071a0e;
@@ -1055,29 +1055,46 @@ body{
   }
 
   .sammy-mascot-v2 {
-    max-height: 55vh; /* Un poco más grande */
+    max-height: 50vh;
     height: auto !important;
     width: auto;
-    margin-left: 0;
-    margin-bottom: 0; /* Sin recorte abajo */
+    margin-left: -40px; /* Movido un poco a la izquierda para dar espacio a la burbuja */
+    margin-bottom: 0;
     animation: sammyZoomEntrance 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     object-fit: contain;
   }
 
   .sammy-bubble-v2 {
-    top: -35%; /* ¡MUCHO MÁS ARRIBA! */
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.15rem;
-    padding: 14px 22px;
+    top: 10%; /* Bajada para no tapar el logo superior */
+    left: 65%; /* Movida a la derecha de Sammy */
+    transform: none;
+    font-size: 0.95rem; /* Un poco más pequeña para que quepa */
+    padding: 10px 18px;
     white-space: normal;
-    width: 90%;
+    width: 140px; /* Tamaño fijo para que no se desborde */
     animation: bubbleFloatMobile 2s ease-in-out infinite;
   }
 
+  .sammy-bubble-v2::after {
+    left: -15px;
+    bottom: 50%;
+    transform: translateY(50%);
+    border-width: 10px 15px 10px 0;
+    border-color: transparent #071a0e transparent transparent;
+  }
+
+  .sammy-text-logo-v2 {
+    position: absolute;
+    top: -40px; /* Arriba de Sammy */
+    left: 10%; /* Un poco a la izquierda */
+    height: 120px; /* Más pequeño */
+    z-index: 6;
+    filter: drop-shadow(0 8px 15px rgba(0,0,0,0.5));
+  }
+
   @keyframes bubbleFloatMobile {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(-8px); }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
   }
 
   .sammy-bubble-v2::after {
