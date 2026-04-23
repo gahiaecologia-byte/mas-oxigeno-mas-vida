@@ -265,6 +265,7 @@ export default function App() {
   const [showAdminAuth, setShowAdminAuth] = useState(false);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
   const [accessKey, setAccessKey] = useState('');
+  const [mapExpanded, setMapExpanded] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const content = getContent();
   const treesData = getTrees();
@@ -706,7 +707,15 @@ export default function App() {
               </div>
             </div>
 
-            <div className="map-section">
+            <div className={`map-section ${mapExpanded ? 'expanded' : ''}`}>
+              <button 
+                className="map-toggle-btn" 
+                onClick={() => setMapExpanded(!mapExpanded)}
+                title={mapExpanded ? "Reducir mapa" : "Agrandar mapa"}
+              >
+                {mapExpanded ? <RefreshCw size={20} /> : <Globe size={20} />}
+                <span>{mapExpanded ? "Cerrar Mapa" : "Ver Mapa Completo"}</span>
+              </button>
               <MapContainer center={searchResult.data.coordinates} zoom={14} scrollWheelZoom>
                 <TileLayer attribution="© OpenStreetMap" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 <Marker position={searchResult.data.coordinates}>
